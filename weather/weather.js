@@ -18,7 +18,7 @@ const getWeather = (lat, lng) => new Promise ((resolve, reject) => {
             if (e.code === `ENOTFOUND`)
                 reject(`Unable to connect to DarkSky servers.`)
 
-            reject(e.response.data.error)
+            reject(`${e.response.status} Error: ${e.response.statusText} when calling Darksky API`)
         })
 })
 
