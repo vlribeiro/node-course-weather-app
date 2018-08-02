@@ -9,7 +9,7 @@ const argv = yargs
         address: {
             alias: `a`,
             demand: true,
-            descibe: `Address to fetch weather for`,
+            describe: `Address to fetch weather for`,
             string: true
         }
     })
