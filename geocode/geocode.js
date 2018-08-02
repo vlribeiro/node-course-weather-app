@@ -13,12 +13,19 @@ const geocodeAddress = (address) => new Promise ((resolve, reject) => {
             
             if (data.status === `ZERO_RESULTS`)
                 reject(`Unable to find that address`)
+            
+            if (data.status === `REQUEST_DENIED`)
+                reject(`Request denied by Google Geocoding API, have you updated your Google Geocoding Key at .env file?`)
 
-            resolve({
-                address: data.results[0].formatted_address,
-                lat: data.results[0].geometry.location.lat,
-                lng: data.results[0].geometry.location.lng
-            })
+            if (data.status !== 'OK')
+                reject(`Reqest returned with ${data.status} error from Google Geocoding API`)
+
+            if (data.results != null && data.results.length > 0)
+                resolve({
+                    address: data.results[0].formatted_address,
+                    lat: data.results[0].geometry.location.lat,
+                    lng: data.results[0].geometry.location.lng
+                })
         })
         .catch(e => {console.log(e)
             if (e.code === `ENOTFOUND`)
